@@ -4,8 +4,10 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
 
 // array in local storage for registered users
-const usersKey = 'angular-14-registration-login-example-users';
+const usersKey = 'listening-buddy-users';
 let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+const clientKey = 'listening-buddy-client';
+let clients: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -28,6 +30,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateUser();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
                     return deleteUser();
+                    case url.endsWith('/userJobs/register') && method === 'POST':
+                        return registerJob();
+                    case url.endsWith('/userJobs') && method === 'GET':
+                        return getUsers();
+                    case url.match(/\/usersJobs\/\d+$/) && method === 'GET':
+                        return getClientById();
+                    case url.match(/\/usersJobs\/\d+$/) && method === 'PUT':
+                        return updateJobs();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -94,6 +104,44 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             users = users.filter(x => x.id !== idFromUrl());
             localStorage.setItem(usersKey, JSON.stringify(users));
+            return ok();
+        }
+
+        function getClientById() {
+            if (!isLoggedIn()) return unauthorized();
+
+            const client = clients.find(x => x.id === idFromUrl());
+            return ok(basicDetails(client));
+        }
+
+        function updateJobs() {
+            if (!isLoggedIn()) return unauthorized();
+
+            let params = body;
+            let client = clients.find(x => x.id === idFromUrl());
+
+            // only update password if entered
+            if (!params.password) {
+                delete params.password;
+            }
+
+            // update and save client
+            Object.assign(client, params);
+            localStorage.setItem(clientKey, JSON.stringify(clients));
+
+            return ok();
+        }
+
+        function registerJob() {
+            const client = body
+
+            if (clients.find(x => x.username === client.username)) {
+                return error('Username "' + client.username + '" is already taken')
+            }
+
+            client.id = clients.length ? Math.max(...clients.map(x => x.id)) + 1 : 1;
+            clients.push(client);
+            localStorage.setItem(clientKey, JSON.stringify(clients));
             return ok();
         }
 

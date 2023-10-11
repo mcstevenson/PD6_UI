@@ -10,7 +10,7 @@ export class UsersJobListComponent implements OnInit {
     constructor(private accountService: AccountService) {}
 
     ngOnInit() {
-        this.accountService.getAll()
+        this.accountService.getAllJobs()
             .pipe(first())
             .subscribe(users => this.users = users);
     }
