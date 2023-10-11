@@ -1,0 +1,21 @@
+﻿import { Component } from '@angular/core';
+
+@Component({ template: `<h1>Users</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">First Name</th>
+            <th style="width: 30%">Last Name</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sneha</td>
+            <td>Singi</td>
+        </tr>
+    </tbody>
+</table>` })
+
+export class CreditComponent {
+}
