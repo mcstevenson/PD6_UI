@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
-
+import { NgOptimizedImage } from '@angular/common'
 @Component({ templateUrl: 'login.component.html', styleUrls: ['login.component.css'] })
 export class LoginComponent implements OnInit {
     form!: FormGroup;
