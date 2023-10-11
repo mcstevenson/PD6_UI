@@ -1,7 +1,7 @@
 ﻿<div class = "img">
     <img [src]="'../images/logo.jpg'" height="200" width="200" alt="Alternative Text"/>
 </div><div class="card">
-    <h4 class="card-header">Login</h4>
+    <h4 class="card-header" align="center">Login</h4>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
@@ -18,7 +18,7 @@
                     <div *ngIf="f.password.errors.required">Password is required</div>
                 </div>
             </div>
-            <div>
+            <div align="center">
                 <button [disabled]="loading" class="btn btn-primary">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
                     Login

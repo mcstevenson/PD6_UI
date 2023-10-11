@@ -6,11 +6,13 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
-
+import { Client } from '@app/_models/client';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userSubject: BehaviorSubject<User | null>;
     public user: Observable<User | null>;
+    private clientSubject: BehaviorSubject<Client | null>;
+    public client: Observable<Client | null>;
 
     constructor(
         private router: Router,
@@ -18,10 +20,17 @@ export class AccountService {
     ) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
+        this.clientSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('client')!));
+        this.client = this.clientSubject.asObservable();
     }
 
     public get userValue() {
         return this.userSubject.value;
+    }
+
+
+    public get clientValue() {
+        return this.clientSubject.value;
     }
 
     login(username: string, password: string) {
@@ -78,5 +87,29 @@ export class AccountService {
                 }
                 return x;
             }));
+    }
+
+    updateJobs(id: string, params: any) {
+        return this.http.put(`${environment.apiUrl}/usersJobs/${id}`, params)
+            .pipe(map(x => {
+                // update stored user if the logged in user updated their own record
+                if (id == this.clientValue?.id) {
+                    // update local storage
+                    const client = { ...this.clientValue, ...params };
+                    localStorage.setItem('client', JSON.stringify(client));
+
+                    // publish updated user to subscribers
+                    this.clientSubject.next(client);
+                }
+                return x;
+            }));
+    }
+
+    getAllJobs() {
+        return this.http.get<User[]>(`${environment.apiUrl}/usersJobs`);
+    }
+
+    getJobById(id: string) {
+        return this.http.get<User>(`${environment.apiUrl}/usersJobs/${id}`);
     }
 }
