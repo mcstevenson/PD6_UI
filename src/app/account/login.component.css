@@ -1,11 +1,10 @@
-.card-header{
-    background-color:  #76CAF1;
-    border-color: #1C5BA7;
-    }
+.card-header {
+  background-color: #76CAF1;
+  border-color: #1C5BA7;
+}
 
-.form-control
-{
-    border-color: #76CAF1;
+.form-control {
+  border-color: #76CAF1;
 }
 
 .div-center {
@@ -19,7 +18,7 @@
   display: grid;
 }
 
-.grid-container-login{
+.grid-container-login {
 
   grid-template-areas:
       'header header header'
@@ -34,6 +33,18 @@
     'header '
     'login-form' 'main-img';
   }
+
+  .login-main {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-main {
+    margin-left: 10px;
+    width: 95%;
+  }
 }
 
 .login-header {
@@ -43,8 +54,7 @@
 
 .login-main {
   grid-area: main-img;
-  margin-left: 10px;
-  width: 95%;
+
   min-height: 300px;
 }
 
