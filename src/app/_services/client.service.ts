@@ -105,11 +105,11 @@ export class AccountService {
             }));
     }
 
-    getAllJobs() {
-        return this.http.get<Client[]>(`${environment.apiUrl}/usersJobs`);
-    }
+    // getAllJobs() {
+    //     return this.http.get<User[]>(`${environment.apiUrl}/usersJobs`);
+    // }
 
     getJobById(id: string) {
-        return this.http.get<Client>(`${environment.apiUrl}/usersJobs/${id}`);
+        return this.http.get<User>(`${environment.apiUrl}/usersJobs/${id}`);
     }
 }
