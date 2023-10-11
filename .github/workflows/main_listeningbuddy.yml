@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'listeningbuddy'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00EADDD8160F460AB3AFD93BE13250B0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F945B5CA19941B19994B2FF25E3B209 }}
           package: .
