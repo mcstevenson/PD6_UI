@@ -2,6 +2,8 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+// @ts-ignore
+import * as usersData from "../../staticData/userdata.json";
 
 // array in local storage for registered users
 const usersKey = 'listening-buddy-users';
@@ -11,6 +13,21 @@ let clients: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+
+
+  constructor(){
+    this.ngOnInit();
+  }
+
+  public ngOnInit(): void{
+    localStorage.setItem(usersKey, JSON.stringify([]))
+    usersData.default.forEach((user: { id: any; }) =>{
+      if(! users.find(x => x.id === user.id as any )){
+        users.push(user);
+        localStorage.setItem(usersKey, JSON.stringify(users));
+      }
+    })
+  }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
@@ -41,7 +58,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
-            }    
+            }
         }
 
         // route functions
@@ -184,3 +201,6 @@ export const fakeBackendProvider = {
     useClass: FakeBackendInterceptor,
     multi: true
 };
+
+
+
