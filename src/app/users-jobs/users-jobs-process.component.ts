@@ -38,10 +38,10 @@ export class JobProcessComponent implements OnInit {
             address: ['', Validators.required],
         });
 
-        this.title = "Add Job"
+        this.title = "Add Appointments"
         if (this.jobId) {
             // edit mode
-            this.title = 'Edit Job';
+            this.title = 'Edit Appointments';
             this.loading1 = true;
             this.accountService.getJobById(this.jobId)
                 .pipe(first())
