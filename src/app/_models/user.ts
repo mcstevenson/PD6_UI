@@ -19,4 +19,5 @@ export class Jobs {
     notes?: string;
     address?: string;
     rating?: string;
+    status: any;
 }
