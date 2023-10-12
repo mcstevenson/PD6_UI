@@ -1,6 +1,9 @@
-﻿export class Client {
-    id?: string;
-    clientName?: string;
+﻿export class Jobs {
+    jobId?: string;
+    clientId?: string;
+    clientFirstName?: string;
+    clientLastName?: string;
+    clientDob?:string;
     postCode?: string;
     timeslot?: string;
     notes?: string;

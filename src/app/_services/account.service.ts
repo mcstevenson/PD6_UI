@@ -5,14 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
-import { Client } from '@app/_models/client';
+import { User, Jobs} from '@app/_models';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userSubject: BehaviorSubject<User | null>;
     public user: Observable<User | null>;
-    private clientSubject: BehaviorSubject<Client | null>;
-    public client: Observable<Client | null>;
+    private jobSubject: BehaviorSubject<Jobs | null>;
+    public job: Observable<Jobs | null>;
 
     constructor(
         private router: Router,
@@ -20,8 +19,8 @@ export class AccountService {
     ) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
-        this.clientSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('client')!));
-        this.client = this.clientSubject.asObservable();
+        this.jobSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('job')!));
+        this.job = this.jobSubject.asObservable();
     }
 
     public get userValue() {
@@ -30,7 +29,7 @@ export class AccountService {
 
 
     public get clientValue() {
-        return this.clientSubject.value;
+        return this.jobSubject.value;
     }
 
     login(username: string, password: string) {
@@ -52,6 +51,11 @@ export class AccountService {
 
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
+    }
+
+    
+    registerJob(job: Jobs) {
+        return this.http.post(`${environment.apiUrl}/userJobs/register`, job);
     }
 
     getAll() {
@@ -89,27 +93,29 @@ export class AccountService {
             }));
     }
 
-    updateJobs(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/usersJobs/${id}`, params)
+    updateJobs(jobId: string, params: any) {
+        return this.http.put(`${environment.apiUrl}/usersJobs/${jobId}`, params)
             .pipe(map(x => {
                 // update stored user if the logged in user updated their own record
-                if (id == this.clientValue?.id) {
+                if (jobId == this.clientValue?.jobId) {
                     // update local storage
                     const client = { ...this.clientValue, ...params };
-                    localStorage.setItem('client', JSON.stringify(client));
+                    localStorage.setItem('job', JSON.stringify(client));
 
                     // publish updated user to subscribers
-                    this.clientSubject.next(client);
+                    this.jobSubject.next(client);
                 }
                 return x;
             }));
     }
 
     getAllJobs() {
-        return this.http.get<Client[]>(`${environment.apiUrl}/usersJobs`);
+        return this.http.get<Jobs[]>(`${environment.apiUrl}/userJobs`);
     }
 
-    getJobById(id: string) {
-        return this.http.get<Client>(`${environment.apiUrl}/usersJobs/${id}`);
+    getJobById(jobId: string) {
+        return this.http.get<Jobs[]>(`${environment.apiUrl}/userJobs/${jobId}`);
     }
+
+
 }

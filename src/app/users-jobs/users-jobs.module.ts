@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UsersRoutingModule } from './users-jobs-routing.module';
 import { UserJobsLayoutComponent } from './users-jobs-layout.component';
 import { UsersJobListComponent } from './users-jobs-list.component';
-import { UserJobAddEditComponent } from './users-jobs-add-edit.component';
+import { JobAddEditComponent } from './users-jobs-add-edit.component';
 
 @NgModule({
     imports: [
@@ -16,7 +16,7 @@ import { UserJobAddEditComponent } from './users-jobs-add-edit.component';
     declarations: [
         UserJobsLayoutComponent,
         UsersJobListComponent,
-        UserJobAddEditComponent
+        JobAddEditComponent
     ]
 })
 export class UsersJobModule { }

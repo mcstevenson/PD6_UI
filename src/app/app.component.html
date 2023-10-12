@@ -1,10 +1,12 @@
 ﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark px-3" *ngIf="user">
+<nav class="navbar navbar-expand px-3" *ngIf="user">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>
+        <!-- <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" >Home</a> -->
+        <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active" >Users</a>
         <a class="nav-item nav-link" routerLink="/userJobs" routerLinkActive="active">Jobs</a>
         <button class="btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
+        <img class="div-center login-logo" src="./assets/images/logo.jpg"  alt="Alternative Text" height="40" width="450" style="float: right"/>
+
     </div>
 </nav>
 
