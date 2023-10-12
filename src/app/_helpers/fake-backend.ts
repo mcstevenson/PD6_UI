@@ -53,9 +53,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return registerJob();
                     case url.endsWith('/userJobs') && method === 'GET':
                         return getAllJobs();
-                    case url.match(/\/userJobs\/\d+$/) && method === 'GET':
+                    case url.match(/\/editJob\/\d+$/) && method === 'GET':
                         return getJobsById();
-                    case url.match(/\/userJobs\/\d+$/) && method === 'PUT':
+                    case url.match(/\/editJob\/\d+$/) && method === 'PUT':
                         return updateJobs();
                 default:
                     // pass through any requests not handled above

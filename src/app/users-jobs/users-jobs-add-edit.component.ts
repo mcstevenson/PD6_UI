@@ -30,7 +30,9 @@ export class JobAddEditComponent implements OnInit {
             clientFirstName: ['', Validators.required],
             clientLastName: ['', Validators.required],
             postCode: ['', Validators.required],
-            timeSlot: ['', Validators.required],...(!this.jobId ? [Validators.required] : [])
+            timeSlot: ['', Validators.required],...(!this.jobId ? [Validators.required] : []),
+             notes: ['', Validators.required],
+            address: ['', Validators.required],
         });
 
         this.title = "Add Job"
@@ -80,6 +82,6 @@ export class JobAddEditComponent implements OnInit {
         // create or update user based on id param
         return this.jobId
             ? this.accountService.updateJobs(this.jobId!, this.form.value)
-            : this.accountService.register(this.form.value);
+            : this.accountService.registerJob(this.form.value);
     }
 }

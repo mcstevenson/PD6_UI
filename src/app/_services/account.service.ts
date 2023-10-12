@@ -55,7 +55,7 @@ export class AccountService {
 
     
     registerJob(job: Jobs) {
-        return this.http.post(`${environment.apiUrl}/userJobs/add`, job);
+        return this.http.post(`${environment.apiUrl}/userJobs/register`, job);
     }
 
     getAll() {
@@ -113,8 +113,8 @@ export class AccountService {
         return this.http.get<Jobs[]>(`${environment.apiUrl}/userJobs`);
     }
 
-    getJobById(clientId: string) {
-        return this.http.get<Jobs>(`${environment.apiUrl}/usersJobs/${clientId}`);
+    getJobById(jobId: string) {
+        return this.http.get<Jobs>(`${environment.apiUrl}/userJobs/${jobId}`);
     }
 
 
