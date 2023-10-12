@@ -3,10 +3,10 @@ import {first} from 'rxjs/operators';
 
 import {AccountService} from '@app/_services';
 
-@Component({templateUrl: 'users-jobs-list.component.html'})
+@Component({templateUrl: 'users-jobs-list.component.html' ,styleUrls: ['user-jobs.css']})
 export class UsersJobListComponent implements OnInit {
   jobs?: any[];
-  jobStatus = ['Assigned', 'On the way', 'Reached', 'Visiting Start', 'Emergency', 'Visited'];
+  jobStatus = ['Assigned', 'On the way', 'Checkin', 'Emergency', 'CheckinOut'];
   processId = null;
 
   constructor(private accountService: AccountService) {
@@ -17,7 +17,7 @@ export class UsersJobListComponent implements OnInit {
       .pipe(first())
       .subscribe(jobs => {
           let filteredKeys = jobs.filter(job => job.status != this.jobStatus[0]
-            || job.status != this.jobStatus[4] || job.status != this.jobStatus[5])
+            || job.status != this.jobStatus[4] || job.status != this.jobStatus[3])
           if (filteredKeys.length > 1) {
             // @ts-ignore
             this.processId = filteredKeys[0].jobId;
@@ -27,12 +27,13 @@ export class UsersJobListComponent implements OnInit {
       );
   }
 
-  updateSatus(jobId: string, status:any) {
+  updateSatus(jobId: string, status: any) {
     const job = this.jobs!.find(x => x.jobId === jobId);
-    job.isDeleting = true;
-    this.accountService.delete(jobId)
+
+    this.jobs?.filter(x => x.jobId === jobId).forEach(x => x.status = status);
+    this.accountService.updateSatus(jobId, {status})
       .pipe(first())
-      .subscribe(() => this.jobs = this.jobs!.filter(x => x.jobId !== jobId));
+      .subscribe(() => this.jobs);
   }
 
   deleteUser(jobId: string) {
