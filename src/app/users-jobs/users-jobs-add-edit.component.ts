@@ -30,9 +30,9 @@ export class JobAddEditComponent implements OnInit {
             clientFirstName: ['', Validators.required],
             clientLastName: ['', Validators.required],
             postCode: ['', Validators.required],
-            timeSlot: ['', Validators.required],...(!this.jobId ? [Validators.required] : []),
-             notes: ['', Validators.required],
+            notes: ['', Validators.required],
             address: ['', Validators.required],
+            timeSlot: ['', Validators.required],...(!this.jobId ? [Validators.required] : [])
         });
 
         this.title = "Add Job"
