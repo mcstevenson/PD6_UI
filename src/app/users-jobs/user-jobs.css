@@ -1,0 +1,21 @@
+.jobMapList {
+  display: grid;
+  grid-template-areas:
+      'jobList jobList jobList jobMap'
+}
+
+.jobList {
+
+  grid-area: jobList;
+}
+
+.mapJob {
+  grid-area: jobMap;
+  margin: 0 10px 0 10px;
+}
+.mapJob img{
+  height: 400px;
+  width: 400px;
+  object-fit: contain;
+  position: relative;
+}

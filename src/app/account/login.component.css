@@ -1,0 +1,86 @@
+.card-header {
+  background-color: #76CAF1;
+  border-color: #1C5BA7;
+}
+
+.form-control {
+  border-color: #76CAF1;
+}
+
+.div-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.grid-container-login {
+  display: grid;
+}
+
+.grid-container-login {
+
+  grid-template-areas:
+      'header header header'
+      'main-img main-img login-form';
+}
+
+@media (max-width: 992px) {
+
+  .grid-container-login {
+
+    grid-template-areas:
+    'header '
+    'login-form' 'main-img';
+  }
+
+  .login-main {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-main {
+    margin-left: 10px;
+    width: 95%;
+  }
+}
+
+.login-header {
+  grid-area: header;
+  margin-bottom: 20px;
+}
+
+.login-main {
+  grid-area: main-img;
+
+  min-height: 300px;
+}
+
+
+.grid-login-form {
+  grid-area: login-form;
+}
+
+.login-bg {
+  background-image: url('/assets/images/loginImage.jpg');
+  height: 80%;
+  background-size: cover;
+}
+
+.login-main-text {
+  height: 20%;
+  background-color: #3E6EB4;
+  color: white;
+  font-size: 2em;
+  text-align: center
+}
+
+.login-logo {
+  max-height: 70px;
+}
+
+.font-white {
+  color: white;
+}
