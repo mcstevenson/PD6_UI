@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
- <!--   jobStatus = [0 'Assigned', 1 'On the way',2 'Reached', 3 'Visiting Start', 4 'Emergency',' 5 Visited'];-->
+ <!--    jobStatus = [0 'Assigned', 1 'On the way',2 'Checkin',  3 'Emergency',' 4 CheckinOut'];-->
 
     <tr *ngFor="let job of jobs">
             <td>{{job.clientFirstName}} {{job.clientLastName}}</td>
@@ -23,11 +23,9 @@
               <a routerLink="./userJobs/{{job.jobId}}" class="btn btn-sm btn-primary me-1">View</a>
               <button (click) = "updateSatus(job.jobId,1)" *ngIf="!job.status" type="button" class="btn btn-primary btn-sm">{{jobStatus[1]}}</button>
               <button (click)  = "updateSatus(job.jobId,1)" *ngIf="job.status==0" type="button" class="btn btn-primary btn-sm">{{jobStatus[1]}}</button>
-              <button (click)  = "updateSatus(job.jobId,1)" *ngIf="job.status==1" type="button" class="btn btn-primary btn-sm">{{jobStatus[2]}}</button>
-              <button (click)  = "updateSatus(job.jobId,1)" *ngIf="job.status==2" type="button" class="btn btn-primary btn-sm">{{jobStatus[3]}}</button>
-              <button (click)  = "updateSatus(job.jobId,1)" *ngIf="job.status==3" type="button" class="btn btn-primary btn-sm">{{jobStatus[4]}} {{jobStatus[5]}}</button>
-
-
+              <button (click)  = "updateSatus(job.jobId,2)" *ngIf="job.status==1" type="button" class="btn btn-primary btn-sm">{{jobStatus[2]}}</button>
+              <button (click)  = "updateSatus(job.jobId,3)" *ngIf="job.status==2" type="button" class="btn btn-primary btn-sm">{{jobStatus[3]}}</button>
+              <button (click)  = "updateSatus(job.jobId,4)" *ngIf="job.status==2" type="button" class="btn btn-primary btn-sm">{{jobStatus[4]}}</button>
                 <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
                     <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
                     <span *ngIf="!user.isDeleting">Delete</span>

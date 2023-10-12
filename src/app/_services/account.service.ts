@@ -93,6 +93,17 @@ export class AccountService {
             }));
     }
 
+  updateSatus(id: string, params: any) {
+    return this.http.put(`${environment.apiUrl}/updateJobStatus/${id}`,params)
+      .pipe(map(x => {
+        // auto logout if the logged in user deleted their own record
+        if (id == this.userValue?.id) {
+          this.logout();
+        }
+        return x;
+      }));
+  }
+
     updateJobs(jobId: string, params: any) {
         return this.http.put(`${environment.apiUrl}/userJobs/${jobId}`, params)
             .pipe(map(x => {

@@ -58,6 +58,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return getJobsById();
                     case url.match(/\/userJobs\/\d+$/) && method === 'PUT':
                         return updateJobs();
+                    case url.match(/\/updateJobStatus\/\d+$/) && method === 'PUT':
+                    return updateJobsStaus();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -160,6 +162,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
+      function  updateJobsStaus(){
+        if (!isLoggedIn()) return unauthorized();
+        let params = body;
+        let job = jobs.find(x => x.jobId === idFromUrl());
+        job.status = params.status;
+        localStorage.setItem(jobsKey, JSON.stringify(jobs));
+        return ok();
+      }
 
         function getAllJobs() {
              if (!isLoggedIn()) return unauthorized();
