@@ -53,7 +53,7 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
     }
 
-    
+
     registerJob(job: Jobs) {
         return this.http.post(`${environment.apiUrl}/userJobs/register`, job);
     }
@@ -94,7 +94,7 @@ export class AccountService {
     }
 
     updateJobs(jobId: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/usersJobs/${jobId}`, params)
+        return this.http.put(`${environment.apiUrl}/userJobs/${jobId}`, params)
             .pipe(map(x => {
                 // update stored user if the logged in user updated their own record
                 if (jobId == this.clientValue?.jobId) {

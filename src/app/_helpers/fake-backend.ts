@@ -5,12 +5,12 @@ import { delay, materialize, dematerialize } from 'rxjs/operators';
 // // @ts-ignore
 // import * as usersData from "../../staticData/userdata.json";
 // @ts-ignore
-import * as jobData from "../../staticData/jobdata.json";
+//import * as jobData from "../../staticData/jobdata.json";
 
 // array in local storage for registered users
 const usersKey = 'listening-buddy-users';
 let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-const jobsKey = 'listening-buddy-job';
+const jobsKey = 'listening-buddy-jobs';
 let jobs: any[] = JSON.parse(localStorage.getItem(jobsKey)!) || [];
 
 @Injectable()
@@ -36,6 +36,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return handleRoute();
 
         function handleRoute() {
+          console.log("handleRoute url: " + url +" "+ method)
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
@@ -81,7 +82,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (users.find(x => x.username === user.username)) {
                 return error('Username "' + user.username + '" is already taken')
             }
-            
+
             user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
             users.push(user);
             localStorage.setItem(usersKey, JSON.stringify(users));
@@ -145,6 +146,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function updateJobs() {
+
+          console.log(updateJobs)
             if (!isLoggedIn()) return unauthorized();
 
             let params = body;
@@ -157,7 +160,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
-        
+
         function getAllJobs() {
              if (!isLoggedIn()) return unauthorized();
             return ok(jobs.map(x => basicJobDetails(x)));
@@ -195,8 +198,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function basicJobDetails(job: any) {
-            const { jobId, clientFirstName, postCode, timeslot } = job;
-            return { jobId, clientFirstName, postCode, timeslot};
+           // const { jobId, clientFirstName, clientLastName, postCode, add timeSlot } = job;
+            return job ; // { jobId, clientFirstName, clientLastName, postCode, timeSlot};
         }
     }
 }

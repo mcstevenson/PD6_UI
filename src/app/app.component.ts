@@ -38,8 +38,9 @@ export class AppComponent {
       }
     })
 
-    jobsData.default.forEach((job: { id: any; }) =>{
-      if(! jobs.find(x => x.id === job.id as any )){
+
+    jobsData.default.forEach((job: { jobId: any; }) =>{
+      if(! jobs.find(x => x.jobId === job.jobId as any )){
         jobs.push(job);
         localStorage.setItem(jobsKey, JSON.stringify(jobs));
       }

@@ -2,14 +2,14 @@
 <form *ngIf="!loading1" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
         <div class="mb-3 col">
-            <label class="form-label">Client First name</label>
+            <label class="form-label">Client First Name</label>
             <input type="text" formControlName="clientFirstName" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f.clientFirstName.errors }" />
             <div *ngIf="submitted1 && f.clientFirstName.errors" class="invalid-feedback">
                 <div *ngIf="f.clientFirstName.errors.required">First Name is required</div>
             </div>
         </div>
         <div class="mb-3 col">
-            <label class="form-label">Client Lastname</label>
+            <label class="form-label">Client Last Name</label>
             <input type="text" formControlName="clientLastName" class="form-control" [ngClass]="{ 'is-invalid': submitted1 && f.clientLastName.errors }" />
             <div *ngIf="submitted1 && f.clientLastName.errors" class="invalid-feedback">
                 <div *ngIf="f.clientLastName.errors.required">Last Name is required</div>
