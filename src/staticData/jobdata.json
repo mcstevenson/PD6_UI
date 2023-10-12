@@ -1,28 +1,11 @@
 [
   {
-    "jobId": 1,
-    "clientId": "admin",
-    "clientFirstName": "Client",
-    "clientLastName": "Client",
-    "clientDob": "29/12/1988",
-    "timeSlot": "10AM - 11AM",
-    "notes": "admin",
-    "address": "admin1234",
-    "rating": "admin1234",
-    "postCode" : "postcode"
-  },
-
-
-  {
-    "jobId": 2,
-    "clientId": "admin1",
-    "clientFirstName": "Client",
-    "clientLastName": "Client",
-    "clientDob": "29/12/1988",
-    "timeSlot": "11:30AM - 11AM",
-    "notes": "admin2",
-    "address": "admin1234",
-    "rating": "admin1234",
-    "postCode" : "postcode"
+    "id": 1,
+    "clientName": "test",
+    "postCode": "test",
+    "timeslot": "test",
+    "notes": "test",
+    "address": "test",
+    "rating": "test"
   }
 ]

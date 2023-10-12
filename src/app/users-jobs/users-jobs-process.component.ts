@@ -71,7 +71,7 @@ export class JobProcessComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Job saved', { keepAfterRouteChange: true });
+                    this.alertService.success('Appointment saved', { keepAfterRouteChange: true });
                     this.router.navigateByUrl('/userJobs');
                 },
                 error: error => {
