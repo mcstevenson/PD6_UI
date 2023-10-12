@@ -1,6 +1,6 @@
 [
   {
-    "jobId": "001",
+    "jobId": 1,
     "clientId": "admin",
     "clientFirstName": "admin",
     "clientLastName": "admin",
@@ -8,17 +8,19 @@
     "timeSlot": "admin",
     "notes": "admin",
     "address": "admin1234",
-    "rating": "admin1234"
+    "rating": "admin1234",
+    "postCode" : "postcode"
   },
   {
-    "jobId": "002",
-    "clientId": "admin",
-    "clientFirstName": "admin",
-    "clientLastName": "admin",
+    "jobId": 2,
+    "clientId": "admin1",
+    "clientFirstName": "admin2",
+    "clientLastName": "admin3",
     "clientDob": "29/12/1988",
-    "timeSlot": "admin",
-    "notes": "admin",
+    "timeSlot": "admin2",
+    "notes": "admin2",
     "address": "admin1234",
-    "rating": "admin1234"
+    "rating": "admin1234",
+    "postCode" : "postcode"
   }
 ]
