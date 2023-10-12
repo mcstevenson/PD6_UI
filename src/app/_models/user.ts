@@ -15,7 +15,7 @@ export class Jobs {
     clientLastName?: string;
     clientDob?:string;
     postCode?: string;
-    timeslot?: string;
+    timeSlot?: string;
     notes?: string;
     address?: string;
     rating?: string;

@@ -114,7 +114,7 @@ export class AccountService {
     }
 
     getJobById(jobId: string) {
-        return this.http.get<Jobs>(`${environment.apiUrl}/userJobs/${jobId}`);
+        return this.http.get<Jobs[]>(`${environment.apiUrl}/userJobs/${jobId}`);
     }
 
 

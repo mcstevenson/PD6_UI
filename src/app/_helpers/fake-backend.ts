@@ -10,7 +10,7 @@ import * as jobData from "../../staticData/jobdata.json";
 // array in local storage for registered users
 const usersKey = 'listening-buddy-users';
 let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-const jobsKey = 'listening-buddy-client';
+const jobsKey = 'listening-buddy-job';
 let jobs: any[] = JSON.parse(localStorage.getItem(jobsKey)!) || [];
 
 @Injectable()
@@ -53,9 +53,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return registerJob();
                     case url.endsWith('/userJobs') && method === 'GET':
                         return getAllJobs();
-                    case url.match(/\/editJob\/\d+$/) && method === 'GET':
+                    case url.match(/\/userJobs\/\d+$/) && method === 'GET':
                         return getJobsById();
-                    case url.match(/\/editJob\/\d+$/) && method === 'PUT':
+                    case url.match(/\/userJobs\/\d+$/) && method === 'PUT':
                         return updateJobs();
                 default:
                     // pass through any requests not handled above
