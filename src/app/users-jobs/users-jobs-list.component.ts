@@ -3,7 +3,7 @@ import {first} from 'rxjs/operators';
 
 import {AccountService} from '@app/_services';
 
-@Component({templateUrl: 'users-jobs-list.component.html'})
+@Component({templateUrl: 'users-jobs-list.component.html' ,styleUrls: ['user-jobs.css']})
 export class UsersJobListComponent implements OnInit {
   jobs?: any[];
   jobStatus = ['Assigned', 'On the way', 'Checkin', 'Emergency', 'CheckinOut'];
