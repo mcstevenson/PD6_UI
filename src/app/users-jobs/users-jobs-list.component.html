@@ -1,27 +1,28 @@
 ﻿<h1>Jobs</h1>
+<a routerLink="addJob" class="btn btn-sm btn-success mb-2">Add Job</a>
 <table class="table table-striped">
     <thead>
         <tr>
             <th style="width: 30%">Client Name</th>
             <th style="width: 30%">Post Code</th>
             <th style="width: 30%">Time slot</th>
-            <th style="width: 10%"></th>
+            <th style="width: 10%">Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users">
-            <td>{{user.firstName}}</td>
-            <td>{{user.lastName}}</td>
-            <td>{{user.username}}</td>
+        <tr *ngFor="let job of jobs">
+            <td>{{job.clientFirstName}} {{job.clientLastName}}</td>
+            <td>{{job.postCode}}</td>
+            <td>{{job.timeSlot}}</td>
             <td style="white-space: nowrap">
-                <a routerLink="edit-user-job/{{user.id}}" class="btn btn-sm btn-primary me-1">View</a>
+                <a routerLink="userJobs/{{job.id}}" class="btn btn-sm btn-primary me-1">View</a>
                 <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
                     <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
                     <span *ngIf="!user.isDeleting">Delete</span>
                 </button> -->
             </td>
         </tr>
-        <tr *ngIf="!users">
+        <tr *ngIf="!jobs">
             <td colspan="4" class="text-center">
                 <span class="spinner-border spinner-border-lg align-center"></span>
             </td>

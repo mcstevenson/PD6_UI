@@ -5,21 +5,21 @@ import { AccountService } from '@app/_services';
 
 @Component({ templateUrl: 'users-jobs-list.component.html' })
 export class UsersJobListComponent implements OnInit {
-    users?: any[];
+    jobs?: any[];
 
     constructor(private accountService: AccountService) {}
 
     ngOnInit() {
         this.accountService.getAllJobs()
             .pipe(first())
-            .subscribe(users => this.users = users);
+            .subscribe(jobs => this.jobs = jobs);
     }
 
-    deleteUser(id: string) {
-        const user = this.users!.find(x => x.id === id);
-        user.isDeleting = true;
-        this.accountService.delete(id)
+    deleteUser(jobId: string) {
+        const job = this.jobs!.find(x => x.jobId === jobId);
+        job.isDeleting = true;
+        this.accountService.delete(jobId)
             .pipe(first())
-            .subscribe(() => this.users = this.users!.filter(x => x.id !== id));
+            .subscribe(() => this.jobs = this.jobs!.filter(x => x.jobId !== jobId));
     }
 }

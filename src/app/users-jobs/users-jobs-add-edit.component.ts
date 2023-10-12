@@ -6,13 +6,13 @@ import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 
 @Component({ templateUrl: 'users-jobs-add-edit.component.html' })
-export class UserJobAddEditComponent implements OnInit {
+export class JobAddEditComponent implements OnInit {
     form!: FormGroup;
-    id?: string;
+    jobId?: string;
     title!: string;
-    loading = false;
-    submitting = false;
-    submitted = false;
+    loading1 = false;
+    submitting1 = false;
+    submitted1 = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -23,28 +23,26 @@ export class UserJobAddEditComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.id = this.route.snapshot.params['id'];
+        this.jobId = this.route.snapshot.params['jobId'];
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            clientName: ['', Validators.required],
+            clientFirstName: ['', Validators.required],
+            clientLastName: ['', Validators.required],
             postCode: ['', Validators.required],
-            timeSlot: ['', Validators.required],
-            notes: ['', Validators.required],
-            address: ['', Validators.required],
-            // password only required in add mode
-            password: ['', [Validators.minLength(6), ...(!this.id ? [Validators.required] : [])]]
+            timeSlot: ['', Validators.required],...(!this.jobId ? [Validators.required] : [])
         });
 
-        if (this.id) {
+        this.title = "Add Job"
+        if (this.jobId) {
             // edit mode
             this.title = 'Edit Job';
-            this.loading = true;
-            this.accountService.getJobById(this.id)
+            this.loading1 = true;
+            this.accountService.getJobById(this.jobId)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
-                    this.loading = false;
+                    this.loading1 = false;
                 });
         }
     }
@@ -53,7 +51,7 @@ export class UserJobAddEditComponent implements OnInit {
     get f() { return this.form.controls; }
 
     onSubmit() {
-        this.submitted = true;
+        this.submitted1 = true;
 
         // reset alerts on submit
         this.alertService.clear();
@@ -63,8 +61,8 @@ export class UserJobAddEditComponent implements OnInit {
             return;
         }
 
-        this.submitting = true;
-        this.saveUser()
+        this.submitting1 = true;
+        this.saveJob()
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -73,15 +71,15 @@ export class UserJobAddEditComponent implements OnInit {
                 },
                 error: error => {
                     this.alertService.error(error);
-                    this.submitting = false;
+                    this.submitting1 = false;
                 }
             })
     }
 
-    private saveUser() {
+    private saveJob() {
         // create or update user based on id param
-        return this.id
-            ? this.accountService.updateJobs(this.id!, this.form.value)
+        return this.jobId
+            ? this.accountService.updateJobs(this.jobId!, this.form.value)
             : this.accountService.register(this.form.value);
     }
 }

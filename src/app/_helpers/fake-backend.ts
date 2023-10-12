@@ -2,32 +2,34 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+// // @ts-ignore
+// import * as usersData from "../../staticData/userdata.json";
 // @ts-ignore
-import * as usersData from "../../staticData/userdata.json";
+import * as jobData from "../../staticData/jobdata.json";
 
 // array in local storage for registered users
 const usersKey = 'listening-buddy-users';
 let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
-const clientKey = 'listening-buddy-client';
-let clients: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
+const jobsKey = 'listening-buddy-client';
+let jobs: any[] = JSON.parse(localStorage.getItem(jobsKey)!) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
 
-  constructor(){
-    this.ngOnInit();
-  }
+//   constructor(){
+//     this.ngOnInit();
+//   }
 
-  public ngOnInit(): void{
-    localStorage.setItem(usersKey, JSON.stringify([]))
-    usersData.default.forEach((user: { id: any; }) =>{
-      if(! users.find(x => x.id === user.id as any )){
-        users.push(user);
-        localStorage.setItem(usersKey, JSON.stringify(users));
-      }
-    })
-  }
+//   public ngOnInit(): void{
+//     localStorage.setItem(jobData, JSON.stringify([]))
+//         jobData.default.forEach((job: { jobId: any; }) =>{
+//       if(!jobs.find(x => x.jobId === job.jobId as any )){
+//         jobs.push(job);
+//         localStorage.setItem(jobsKey, JSON.stringify(jobs));
+//       }
+//     })
+//   }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
 
@@ -50,10 +52,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     case url.endsWith('/userJobs/register') && method === 'POST':
                         return registerJob();
                     case url.endsWith('/userJobs') && method === 'GET':
-                        return getUsers();
-                    case url.match(/\/usersJobs\/\d+$/) && method === 'GET':
-                        return getClientById();
-                    case url.match(/\/usersJobs\/\d+$/) && method === 'PUT':
+                        return getAllJobs();
+                    case url.match(/\/userJobs\/\d+$/) && method === 'GET':
+                        return getJobsById();
+                    case url.match(/\/userJobs\/\d+$/) && method === 'PUT':
                         return updateJobs();
                 default:
                     // pass through any requests not handled above
@@ -79,10 +81,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (users.find(x => x.username === user.username)) {
                 return error('Username "' + user.username + '" is already taken')
             }
-
+            
             user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
             users.push(user);
             localStorage.setItem(usersKey, JSON.stringify(users));
+            return ok();
+        }
+
+        function registerJob() {
+            const job = body
+
+            if (jobs.find(x => x.clientFirstName === job.clientFirstName && x.clientLastName === job.clientLastName && x.clientDob === job.clientDob)) {
+                return error('Client name "' + job.clientFirstName + '" is already taken')
+            }
+
+            job.jobId = jobs.length ? Math.max(...jobs.map(x => x.jobId)) + 1 : 1;
+            jobs.push(job);
+            localStorage.setItem(jobsKey, JSON.stringify(jobs));
             return ok();
         }
 
@@ -124,42 +139,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
-        function getClientById() {
-            if (!isLoggedIn()) return unauthorized();
-
-            const client = clients.find(x => x.id === idFromUrl());
-            return ok(basicDetails(client));
+        function getJobsById() {
+             const job = jobs.find(x => x.jobId === idFromUrl());
+            return ok(basicJobDetails(job));
         }
 
         function updateJobs() {
             if (!isLoggedIn()) return unauthorized();
 
             let params = body;
-            let client = clients.find(x => x.id === idFromUrl());
-
-            // only update password if entered
-            if (!params.password) {
-                delete params.password;
-            }
+            let job = jobs.find(x => x.jobId === idFromUrl());
 
             // update and save client
-            Object.assign(client, params);
-            localStorage.setItem(clientKey, JSON.stringify(clients));
+            Object.assign(job, params);
+            localStorage.setItem(jobsKey, JSON.stringify(jobs));
 
             return ok();
         }
 
-        function registerJob() {
-            const client = body
-
-            if (clients.find(x => x.username === client.username)) {
-                return error('Username "' + client.username + '" is already taken')
-            }
-
-            client.id = clients.length ? Math.max(...clients.map(x => x.id)) + 1 : 1;
-            clients.push(client);
-            localStorage.setItem(clientKey, JSON.stringify(clients));
-            return ok();
+        
+        function getAllJobs() {
+             if (!isLoggedIn()) return unauthorized();
+            return ok(jobs.map(x => basicJobDetails(x)));
         }
 
         // helper functions
@@ -191,6 +192,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function idFromUrl() {
             const urlParts = url.split('/');
             return parseInt(urlParts[urlParts.length - 1]);
+        }
+
+        function basicJobDetails(job: any) {
+            const { jobId, clientFirstName, postCode, timeslot } = job;
+            return { jobId, clientFirstName, postCode, timeslot};
         }
     }
 }
